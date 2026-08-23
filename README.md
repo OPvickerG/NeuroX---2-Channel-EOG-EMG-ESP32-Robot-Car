@@ -45,7 +45,7 @@ Accurate placement is critical to avoid ground loops and signal degradation. Bot
     *   Snap BOTH reference wires to a **single** electrode placed on the mastoid bone (behind either ear).
 
 ## 🚀 Setup & Calibration
-1. Flash `eeg_2channel_control.ino` to the ESP32-S3.
+1. Flash `NeuroX_FinalCode_V6.ino` to the ESP32-S3.
 2. Open the Arduino IDE **Serial Plotter** at `115200` baud.
 3. Observe the baseline signals. Every user has different muscle density and biopotential resting states.
 4. Adjust the threshold constants (`BLINK_THRESHOLD`, `LOOK_DOWN_THRESHOLD`, `HORZ_THRESHOLD`) in the firmware to calibrate the system to the specific operator.
