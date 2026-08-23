@@ -19,7 +19,7 @@ NeuroX operates on a pure biological signal mapping system. The operator keeps t
 ## ⚙️ Hardware Architecture & Wiring Diagram
 *   **Microcontroller:** ESP32-S3 (Operating at a rigid 256 Hz sample rate)
 *   **Biopotential Amplifiers:** 2x BioAmp EXG Pills (Upside Down Labs)
-*   **Actuation:** 4-Wheel Robot Chassis with L298N (or similar) Motor Driver
+*   **Actuation:** Custom modified RC remote using an array of 4x BC547 NPN transistors to electronically trigger the controller's PCB contacts.
 *   **Interface:** Standard Ag/AgCl medical gel electrodes
 
 ```mermaid
@@ -42,11 +42,10 @@ graph TD
         ESP[ESP32-S3 Microcontroller]
     end
 
-    subgraph Hardware
-        MD[L298N Motor Driver]
-        ML[Left Motors]
-        MR[Right Motors]
-        BAT[12V Battery Pack]
+    subgraph Hardware Hack
+        TARRAY[4x BC547 Transistor Array]
+        RC[Modified RC Car Controller]
+        CAR[RC Car Receiver & Motors]
     end
 
     BA1 -->|GPIO 4| ESP
@@ -54,22 +53,20 @@ graph TD
     BA1 -.->|3.3V & GND| ESP
     BA2 -.->|3.3V & GND| ESP
 
-    ESP -->|GPIO 5 FWD| MD
-    ESP -->|GPIO 6 REV| MD
-    ESP -->|GPIO 7 LEFT| MD
-    ESP -->|GPIO 8 RIGHT| MD
-    ESP -.->|Shared GND| MD
+    ESP -->|GPIO 5 FWD| TARRAY
+    ESP -->|GPIO 6 REV| TARRAY
+    ESP -->|GPIO 7 LEFT| TARRAY
+    ESP -->|GPIO 8 RIGHT| TARRAY
+    ESP -.->|Shared GND| TARRAY
 
-    BAT -->|12V Power| MD
-    BAT -.->|GND| MD
-
-    MD -->|OUT 1 & 2| ML
-    MD -->|OUT 3 & 4| MR
+    TARRAY -->|Electronic Switch| RC
+    RC -.->|RF Signal| CAR
 
     style ESP fill:#1f6feb,stroke:#fff,stroke-width:2px,color:#fff
     style BA1 fill:#fb8532,stroke:#fff,stroke-width:2px,color:#fff
     style BA2 fill:#fb8532,stroke:#fff,stroke-width:2px,color:#fff
-    style MD fill:#d73a49,stroke:#fff,stroke-width:2px,color:#fff
+    style TARRAY fill:#d73a49,stroke:#fff,stroke-width:2px,color:#fff
+    style RC fill:#2ea043,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 ## 🧠 DSP Pipeline & Algorithmic Design
