@@ -16,11 +16,61 @@ NeuroX operates on a pure biological signal mapping system. The operator keeps t
 *   ➡️ **RIGHT:** Right Saccade / Glance Right *(Positive horizontal EOG spike)*
 *   🛑 **EMERGENCY STOP:** Jaw Clench *(High-frequency EMG burst)*
 
-## ⚙️ Hardware Architecture
+## ⚙️ Hardware Architecture & Wiring Diagram
 *   **Microcontroller:** ESP32-S3 (Operating at a rigid 256 Hz sample rate)
 *   **Biopotential Amplifiers:** 2x BioAmp EXG Pills (Upside Down Labs)
 *   **Actuation:** 4-Wheel Robot Chassis with L298N (or similar) Motor Driver
 *   **Interface:** Standard Ag/AgCl medical gel electrodes
+
+```mermaid
+graph TD
+    subgraph Face Electrodes
+        E1[Pad: Above Eye] -->|IN+| BA1
+        E2[Pad: Below Eye] -->|IN-| BA1
+        E3[Pad: Right Temple] -->|IN+| BA2
+        E4[Pad: Left Temple] -->|IN-| BA2
+        E5[Pad: Behind Ear] -->|REF| BA1
+        E5 -->|REF| BA2
+    end
+
+    subgraph Sensors
+        BA1[BioAmp Pill 1: Vertical]
+        BA2[BioAmp Pill 2: Horizontal]
+    end
+
+    subgraph Brain
+        ESP[ESP32-S3 Microcontroller]
+    end
+
+    subgraph Hardware
+        MD[L298N Motor Driver]
+        ML[Left Motors]
+        MR[Right Motors]
+        BAT[12V Battery Pack]
+    end
+
+    BA1 -->|GPIO 4| ESP
+    BA2 -->|GPIO 1| ESP
+    BA1 -.->|3.3V & GND| ESP
+    BA2 -.->|3.3V & GND| ESP
+
+    ESP -->|GPIO 5 FWD| MD
+    ESP -->|GPIO 6 REV| MD
+    ESP -->|GPIO 7 LEFT| MD
+    ESP -->|GPIO 8 RIGHT| MD
+    ESP -.->|Shared GND| MD
+
+    BAT -->|12V Power| MD
+    BAT -.->|GND| MD
+
+    MD -->|OUT 1 & 2| ML
+    MD -->|OUT 3 & 4| MR
+
+    style ESP fill:#1f6feb,stroke:#fff,stroke-width:2px,color:#fff
+    style BA1 fill:#fb8532,stroke:#fff,stroke-width:2px,color:#fff
+    style BA2 fill:#fb8532,stroke:#fff,stroke-width:2px,color:#fff
+    style MD fill:#d73a49,stroke:#fff,stroke-width:2px,color:#fff
+```
 
 ## 🧠 DSP Pipeline & Algorithmic Design
 Processing raw biological signals on a microcontroller without latency or false-positive crosstalk requires an advanced Digital Signal Processing (DSP) pipeline. The NeuroX v6 firmware features:
