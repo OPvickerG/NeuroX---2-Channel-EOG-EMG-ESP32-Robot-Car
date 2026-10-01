@@ -15,7 +15,7 @@
 | [ESP-S3 Dev Module](https://amzn.in/d/07INkJGW) | Proccessing, Plotter and The main Brain of the project | 1 | $9.00 | $9.00 | [Amazon](https://amzn.in/d/07INkJGW) |
 | [Bioamp Exg Pill Explorer Kit](https://store.upsidedownlabs.tech/product/bioamp-exg-pill/) | For measuring our EOG and EMG signals | 1 | $51.00 | $51.00 | [Upside down labs store](https://store.upsidedownlabs.tech/product/bioamp-exg-pill/) |
 | **Parts subtotal** | — | — | — | **$60.00** | — |
-| **Tax & shipping** | — | — | — | **$400.00** | — |
-| **Total** | — | — | — | **$460.00** | — |
+| **Tax & shipping** | — | — | — | **$4.00** | — |
+| **Total** | — | — | — | **$64.00** | — |
 
-**$395.00 over the tier's funding.** Every tier gives a fixed amount for parts, so this needs cutting back or a higher tier.
+$1.00 left of the tier's funding.
