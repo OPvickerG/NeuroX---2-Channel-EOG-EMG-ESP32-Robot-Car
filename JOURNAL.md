@@ -10,6 +10,6 @@
 
 | Week | Tier | Hours logged | Entries |
 | --- | --- | --- | --- |
-| Warm-up | Tier 1 | 0h | 0 |
+| Warm-up | Tier 2 | 0h | 0 |
 
 _No entries logged yet._
